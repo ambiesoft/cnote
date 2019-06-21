@@ -7,9 +7,11 @@
 #include "../../lsMisc/CHandle.h"
 #include "../../lsMisc/GetChildWindowBy.h"
 #include "../../lsMisc/UTF16toUTF8.h"
+#include "../../lsMisc/stdosd/stdosd.h"
 
 using namespace std;
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -23,9 +25,24 @@ void ShowErrorAndExit(const wstring& message)
 	wstring(L":") + GetLastErrorString(dwLE));		\
 } while(false)
 
-
-int main()
+string toCRLF(const string& all)
 {
+	string ret = stdStringReplace(all, "\r\n", "\n");
+	ret = stdStringReplace(ret, "\r", "\n");
+	ret = stdStringReplace(ret, "\n", "\r\n");
+
+	return ret;
+}
+
+int main(int argc, const char* argv[])
+{
+	bool bCRLF = false;
+	for (int i = 0; i < argc; ++i)
+	{
+		if (strcmp(argv[i], "-W") == 0)
+			bCRLF = true;
+	}
+
 	string all;
 	char buffer[4096];
 	DWORD dwReaded = 0;
@@ -73,7 +90,8 @@ int main()
 	}
 
 
-	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0, (LPARAM)(toStdWstringFromUtf8(all).c_str())))
+	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
+		(LPARAM)(toStdWstringFromUtf8(bCRLF ? toCRLF(all) : all).c_str())))
 	{
 		RETRUN_WITH_ERROR(L"Failed to set text on notepad");
 	}
