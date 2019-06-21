@@ -46,26 +46,19 @@ int main(int argc, const char* argv[])
 	string all;
 	char buffer[4096];
 	DWORD dwReaded = 0;
+    setvbuf(stdin, nullptr, _IONBF, 0);
+
 	do {
-		if (!ReadFile(GetStdHandle(STD_INPUT_HANDLE),
-			buffer,
-			_countof(buffer) - 1,
-			&dwReaded,
-			NULL))
-		{
-			// RETRUN_WITH_ERROR(L"Failed to Read from stdin");
-			break;
-		}
-	
+        dwReaded = fread(buffer, 1, _countof(buffer)-1, stdin);
 		if(dwReaded ==0 )
 			break;  // End of Stream
-
 		buffer[dwReaded] = 0;
 		all += buffer;
-	} while (true);
+    } while (!feof(stdin));
 
 	// MessageBoxA(nullptr, all.c_str(), nullptr, MB_ICONINFORMATION);
 
+    // how to handle window handle in linux?
 	CHandle process = nullptr;
 	if (!OpenCommon(nullptr, L"notepad", nullptr, nullptr, &process))
 	{
