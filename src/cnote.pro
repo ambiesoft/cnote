@@ -5,7 +5,6 @@ CONFIG -= qt
 
 SOURCES += \
     cnote/cnote.cpp \
-    ../../lsMisc/OpenCommon.cpp \
     ../../lsMisc/GetChildWindowBy.cpp \
     ../../lsMisc/GetLastErrorString.cpp \
     ../../lsMisc/UTF16toUTF8.cpp \

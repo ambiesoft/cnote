@@ -45,7 +45,7 @@ int main(int argc, const char* argv[])
 
 	string all;
 	char buffer[4096];
-	DWORD dwReaded = 0;
+	size_t dwReaded = 0;
     setvbuf(stdin, nullptr, _IONBF, 0);
 
 	do {
@@ -59,7 +59,7 @@ int main(int argc, const char* argv[])
 	// MessageBoxA(nullptr, all.c_str(), nullptr, MB_ICONINFORMATION);
 
     // how to handle window handle in linux?
-	CHandle process = nullptr;
+    CHandle process;
 	if (!OpenCommon(nullptr, L"notepad", nullptr, nullptr, &process))
 	{
 		RETRUN_WITH_ERROR(L"Failed to open notepad");
@@ -70,7 +70,8 @@ int main(int argc, const char* argv[])
 		RETRUN_WITH_ERROR(L"Failed to wait notepad");
 	}
 
-	HWND hNotepad = FindTopWindowFromPID(GetProcessId(process));
+	auto allTops = FindTopWindowFromPID(GetProcessId(process));
+	HWND hNotepad = allTops.empty() ? nullptr : *allTops.begin();
 	if (!IsWindow(hNotepad))
 	{
 		RETRUN_WITH_ERROR(L"Failed to wait notepad");
