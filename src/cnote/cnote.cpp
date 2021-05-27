@@ -104,7 +104,7 @@ int main(int argc, const char* argv[])
 	HWND hNotepad = allTops.empty() ? nullptr : *allTops.begin();
 	if (!IsWindow(hNotepad))
 	{
-		RETRUN_WITH_ERROR(L"Failed to wait notepad");
+		RETRUN_WITH_ERROR(L"Failed to find notepad");
 	}
 
 	HWND hEditNotepad = GetChildWindowByClassName(hNotepad, L"Edit");
