@@ -14,7 +14,7 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.1"
+#define CNOTE_VERSION L"1.0.2"
 
 void ShowErrorAndExit(const wstring& message)
 {
