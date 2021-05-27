@@ -7,7 +7,7 @@
             {
             	"setoutdirforbuild": true,
                 "outdir" : "build/cnote/",
-                "platform":"x86"
+                "platform":"Win32"
             }
     ],
     "archivedir": "C:/Linkout/",
