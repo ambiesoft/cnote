@@ -112,7 +112,12 @@ int main(int argc, const char* argv[])
 	{
 		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
 	}
-
+	//vector<HWND> hhh = GetChildWindowsByClassName(hNotepad, L"Edit");
+	//HWND hEditNotepad = hhh.empty() ? NULL : *hhh.begin();
+	//if (!hEditNotepad)
+	//{
+	//	RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
+	//}
 
 	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
 		(LPARAM)(toStdWstringFromUtf8(bCRLF ? toCRLF(all) : all).c_str())))
