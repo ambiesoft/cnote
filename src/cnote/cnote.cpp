@@ -40,11 +40,16 @@ options:
 	exit(0);
 }
 
-#define RETRUN_WITH_ERROR(ERRROSTRING) do {			\
-	DWORD dwLE = GetLastError();					\
-	ShowErrorAndExit(I18N(ERRROSTRING) +			\
-	wstring(L":") + GetLastErrorString(dwLE));		\
-} while(false)
+void RETRUN_WITH_ERROR_WITHLASTERROR(LPCWSTR ERRROSTRING, DWORD dwLE)
+{
+	ShowErrorAndExit(I18N(ERRROSTRING) +
+		wstring(L":") + GetLastErrorString(dwLE));
+}
+void RETRUN_WITH_ERROR(LPCWSTR ERRROSTRING)
+{
+	DWORD dwLE = GetLastError();
+	RETRUN_WITH_ERROR_WITHLASTERROR(ERRROSTRING, dwLE);
+}
 
 string toCRLF(const string& all)
 {
@@ -107,7 +112,8 @@ int main(int argc, const char* argv[])
 		RETRUN_WITH_ERROR(L"Failed to find notepad");
 	}
 
-	HWND hEditNotepad = GetChildWindowByClassName(hNotepad, L"Edit");
+	DWORD dwLE = 0;
+	HWND hEditNotepad = GetChildWindowByClassName(hNotepad, L"Edit", &dwLE);
 	if (!IsWindow(hEditNotepad))
 	{
 		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
