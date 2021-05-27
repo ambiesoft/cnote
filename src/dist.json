@@ -1,0 +1,34 @@
+{
+	"name": "cnote",
+	"solution": "cnote.sln",
+	"targetproject": "zzzDist",
+	"configuration": "Release",
+    "targets": [
+            {
+            	"setoutdirforbuild": true,
+                "outdir" : "build/cnote/",
+                "platform":"x86"
+            }
+    ],
+    "archivedir": "C:/Linkout/",
+    "remotedir": "http://ambiesoft.mooo.com/ffdav/uploads/cnote/",
+    "remotesha1" : "http://ambiesoft.mooo.com/ffdav/uploads/getSha1.php?file=cnote/{}",
+    
+    "TotalFileCount": "exact",
+    
+    "ShouldNotBeFiles": [
+    ],
+    
+    "ShouldBeFiles": [
+		"LICENSE",
+		"history.txt",
+		"cnote.exe",
+		"cnote.pdb",
+		"README.md"
+	],
+    
+    "ShouldBeOneOfThem": [],
+    
+    "obtainverfrom": "history.txt",
+    "obtainverregex": "\\d+\\.\\d+\\.\\d+"
+}
