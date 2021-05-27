@@ -1,3 +1,6 @@
+2021/05/27 v1.0.3
+Try to build with VS2013
+
 2021/05/27 v1.0.2
 Try to build with older VS
 
