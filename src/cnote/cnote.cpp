@@ -13,10 +13,31 @@ using namespace std;
 using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
+#define CNOTE_APPNAME L"cnote"
+#define CNOTE_VERSION L"1.0.1"
+
 void ShowErrorAndExit(const wstring& message)
 {
 	wcerr << message << endl;
 	exit(1);
+}
+void ShowVersionAndExit()
+{
+	wcout << CNOTE_APPNAME << L" v" << CNOTE_VERSION << endl;
+	exit(0);
+}
+void ShowHelpAndExit()
+{
+	wcout << 
+R"(cnote can be used as if 'more' or 'less'.
+
+ex:
+    dir | cnote
+
+options:
+	-w : Convert to Windows-styled newline
+)" << endl;
+	exit(0);
 }
 
 #define RETRUN_WITH_ERROR(ERRROSTRING) do {			\
@@ -37,10 +58,19 @@ string toCRLF(const string& all)
 int main(int argc, const char* argv[])
 {
 	bool bCRLF = false;
-	for (int i = 0; i < argc; ++i)
+	for (int i = 1; i < argc; ++i)
 	{
-		if (strcmp(argv[i], "-W") == 0)
+		if(false){}
+		else if (strcmp(argv[i], "-W") == 0)
 			bCRLF = true;
+		else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0)
+		{
+			ShowVersionAndExit();
+		}
+		else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
+		{
+			ShowHelpAndExit();
+		}
 	}
 
 	string all;
