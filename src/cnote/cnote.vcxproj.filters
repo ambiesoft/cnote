@@ -77,10 +77,23 @@
     <ClInclude Include="..\..\..\lsMisc\UTF16toUTF8.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt">
       <Filter>4 dist</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cnote.rc">
+      <Filter>3 Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>3 Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

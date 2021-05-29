@@ -195,10 +195,17 @@
     <ClInclude Include="..\..\..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\..\..\lsMisc\stdosd\stdosd.h" />
     <ClInclude Include="..\..\..\lsMisc\UTF16toUTF8.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cnote.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

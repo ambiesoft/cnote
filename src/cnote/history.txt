@@ -1,3 +1,6 @@
+2021/05/29 v1.0.5
+Add icon
+
 2021/05/29 v1.0.4
 Fix: Editor hwnd was failed to be found
 
