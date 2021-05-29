@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <cassert>
 
 #include "../../../lsMisc/CHandle.h"
 #include "../../../lsMisc/OpenCommon.h"
@@ -15,8 +16,29 @@ void RETRUN_WITH_ERROR(LPCWSTR p) {
 	wcerr << p << endl;
 	exit(1);
 }
+
+void PinUser32Dll()
+{
+	HMODULE h = LoadLibrary(L"User32.dll");
+	assert(h);
+}
+
+static BOOL CALLBACK testEnumProc(HWND hwnd, LPARAM lParam)
+{
+	HWND* pHwnd = (HWND*)lParam;
+	TCHAR szT[1024]; szT[0] = 0;
+	GetClassName(hwnd, szT, _countof(szT));
+	if (lstrcmp(szT, L"Edit") == 0)
+	{
+		*pHwnd = hwnd;
+		return TRUE;
+	}
+	return FALSE;
+}
 int main()
 {
+	PinUser32Dll();
+
 	CHandle process;
 	if (!OpenCommon(nullptr, L"notepad", nullptr, nullptr, &process))
 	{
@@ -29,13 +51,17 @@ int main()
 	}
 
 	auto allTops = FindTopWindowFromPID(GetProcessId(process));
-	HWND hNotepad = allTops.empty() ? nullptr : *allTops.begin();
-	if (!IsWindow(hNotepad))
+	HWND hEditNotepad = NULL;
+	for (auto hNotepad : allTops)
 	{
-		RETRUN_WITH_ERROR(L"Failed to find notepad");
+		HWND h = NULL;
+		EnumChildWindows(hNotepad, testEnumProc, (LPARAM)&h);
+		if (h)
+		{
+			hEditNotepad = h;
+			break;
+		}
 	}
-
-	HWND hEditNotepad = GetChildWindowByClassName(hNotepad, L"Edit");
 	if (!IsWindow(hEditNotepad))
 	{
 		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");

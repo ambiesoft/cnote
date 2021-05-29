@@ -14,7 +14,7 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.3"
+#define CNOTE_VERSION L"1.0.4"
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -101,23 +101,25 @@ int main(int argc, const char* argv[])
 	}
 
 	auto allTops = FindTopWindowFromPID(GetProcessId(process));
-	HWND hNotepad = allTops.empty() ? nullptr : *allTops.begin();
-	if (!IsWindow(hNotepad))
+	if (allTops.empty())
 	{
 		RETRUN_WITH_ERROR(L"Failed to find notepad");
 	}
 
-	HWND hEditNotepad = GetChildWindowByClassName(hNotepad, L"Edit");
+	HWND hEditNotepad = NULL;
+	for (auto hNotepad : allTops)
+	{
+		HWND h = GetChildWindowByClassName(hNotepad, L"Edit");
+		if (h)
+		{
+			hEditNotepad = h;
+			break;
+		}
+	}
 	if (!IsWindow(hEditNotepad))
 	{
 		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
 	}
-	//vector<HWND> hhh = GetChildWindowsByClassName(hNotepad, L"Edit");
-	//HWND hEditNotepad = hhh.empty() ? NULL : *hhh.begin();
-	//if (!hEditNotepad)
-	//{
-	//	RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
-	//}
 
 	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
 		(LPARAM)(toStdWstringFromUtf8(bCRLF ? toCRLF(all) : all).c_str())))
