@@ -35,7 +35,9 @@ ex:
     dir | cnote
 
 options:
-	-w : Convert to Windows-styled newline
+	-W : Convert to Windows-styled newline
+	-V -v --version: Shows version
+	-h --help : Shows help
 )" << endl;
 	exit(0);
 }
@@ -55,21 +57,25 @@ string toCRLF(const string& all)
 	return ret;
 }
 
-int main(int argc, const char* argv[])
+int wmain(int argc, const wchar_t* argv[])
 {
 	bool bCRLF = false;
 	for (int i = 1; i < argc; ++i)
 	{
 		if(false){}
-		else if (strcmp(argv[i], "-W") == 0)
+		else if (wcscmp(argv[i], L"-W") == 0)
 			bCRLF = true;
-		else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0)
+		else if (wcscmp(argv[i], L"-v") == 0 || wcscmp(argv[i], L"-V") == 0 || wcscmp(argv[i], L"--version") == 0)
 		{
 			ShowVersionAndExit();
 		}
-		else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
+		else if (wcscmp(argv[i], L"-h") == 0 || wcscmp(argv[i], L"--help") == 0)
 		{
 			ShowHelpAndExit();
+		}
+		else
+		{
+			ShowErrorAndExit(stdFormat(L"Unknown option '%s'", argv[i]));
 		}
 	}
 
