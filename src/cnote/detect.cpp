@@ -10,7 +10,8 @@
 
 using namespace std;
 using namespace Ambiesoft;
-wstring ConvertEncoding(const vector<char>& input)
+wstring ConvertEncoding(const vector<char>& input,
+	std::string* encoding)
 {
 	int bytes_consumed = 0;
 	bool is_reliable = false;
@@ -32,7 +33,7 @@ wstring ConvertEncoding(const vector<char>& input)
 	// https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
 	// https://docs.google.com/spreadsheets/d/1oej65p9ZcbUeU-2MsGUvoU_ums9lr4G5QRlc8J0NKvM/edit?usp=sharing
 	int codepage = 0;
-#define CODEMAP(ggl,cp) case ggl: codepage=cp; break
+#define CODEMAP(ggl,cp) case ggl: codepage=cp; if(encoding){ *encoding=#ggl;} break
 	switch (enc)
 	{
 		CODEMAP(ISO_8859_1, 28591);
@@ -54,6 +55,8 @@ wstring ConvertEncoding(const vector<char>& input)
 		CODEMAP(UTF8, 65001);
 	
 	case UTF16LE:
+		if (encoding)
+			*encoding = "UTF16LE";
 		return wstring((wchar_t*)input.data());
 	default:
 		assert(false);

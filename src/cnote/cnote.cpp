@@ -1,5 +1,5 @@
 #include "stdafx.h"
-
+#include <cassert>
 #include "../../../lsMisc/OpenCommon.h"
 #include "../../../lsMisc/GetLastErrorString.h"
 #include "../../../lsMisc/I18N.h"
@@ -9,7 +9,10 @@
 #include "../../../lsMisc/UTF16toUTF8.h"
 #include "../../../lsMisc/stdosd/stdosd.h"
 
+
 #include "detect.h"
+
+
 
 using namespace std;
 using namespace Ambiesoft;
@@ -55,6 +58,7 @@ options:
 int wmain(int argc, const wchar_t* argv[])
 {
 	bool bCRLF = false;
+	bool bVerbose = false;
 	for (int i = 1; i < argc; ++i)
 	{
 		if(false){}
@@ -68,6 +72,10 @@ int wmain(int argc, const wchar_t* argv[])
 		{
 			ShowHelpAndExit();
 		}
+		else if (wcscmp(argv[i], L"--verbose")==0)
+		{
+			bVerbose = true;
+		}
 		else
 		{
 			ShowErrorAndExit(stdFormat(L"Unknown option '%s'", argv[i]));
@@ -78,15 +86,20 @@ int wmain(int argc, const wchar_t* argv[])
 	char buffer[4096];
 	size_t dwReaded = 0;
     setvbuf(stdin, nullptr, _IONBF, 0);
-
+	size_t totalRead = 0;
 	do {
         dwReaded = fread(buffer, 1, _countof(buffer)-1, stdin);
+		assert(dwReaded >= 0);
+		totalRead += dwReaded;
 		if(dwReaded ==0 )
 			break;  // End of Stream
 		buffer[dwReaded] = 0;
 		all.insert(all.end(), buffer, buffer + dwReaded);
     } while (!feof(stdin));
-
+	if (bVerbose)
+	{
+		wcout << L"Total read byte = " << totalRead << L"\n";
+	}
 	// add 4byte of 0
 	all.insert(all.end(), { 0,0,0,0 });
 
@@ -126,8 +139,12 @@ int wmain(int argc, const wchar_t* argv[])
 	}
 
 	// convert encoding
-	wstring converted = ConvertEncoding(all);
-
+	string encoding;
+	wstring converted = ConvertEncoding(all, bVerbose ? &encoding : nullptr);
+	if (bVerbose)
+	{
+		cout << "Detected encoding = " << encoding << "\n";
+	}
 	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
 		(LPARAM)(bCRLF ? stdToCRLFString(converted) : converted).c_str()))
 	{
