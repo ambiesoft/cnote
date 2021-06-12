@@ -124,6 +124,12 @@
     <Text Include="utf8.txt">
       <Filter>5 debug</Filter>
     </Text>
+    <Text Include="utf16le.txt">
+      <Filter>5 debug</Filter>
+    </Text>
+    <Text Include="onebyte.txt">
+      <Filter>5 debug</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cnote.rc">

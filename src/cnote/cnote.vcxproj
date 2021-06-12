@@ -224,7 +224,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt" />
+    <Text Include="onebyte.txt" />
     <Text Include="sjis.txt" />
+    <Text Include="utf16le.txt" />
     <Text Include="utf8.txt" />
   </ItemGroup>
   <ItemGroup>

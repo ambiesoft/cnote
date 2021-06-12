@@ -1,3 +1,3 @@
 #include <string>
 
-std::wstring ConvertEncoding(const std::string& input);
+std::wstring ConvertEncoding(const std::vector<char>& input);

@@ -16,7 +16,7 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.7"
+#define CNOTE_VERSION L"1.0.8"
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -74,7 +74,7 @@ int wmain(int argc, const wchar_t* argv[])
 		}
 	}
 
-	string all;
+	vector<char> all;
 	char buffer[4096];
 	size_t dwReaded = 0;
     setvbuf(stdin, nullptr, _IONBF, 0);
@@ -84,8 +84,11 @@ int wmain(int argc, const wchar_t* argv[])
 		if(dwReaded ==0 )
 			break;  // End of Stream
 		buffer[dwReaded] = 0;
-		all += buffer;
+		all.insert(all.end(), buffer, buffer + dwReaded);
     } while (!feof(stdin));
+
+	// add 4byte of 0
+	all.insert(all.end(), { 0,0,0,0 });
 
 	// MessageBoxA(nullptr, all.c_str(), nullptr, MB_ICONINFORMATION);
 

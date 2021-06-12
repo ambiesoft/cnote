@@ -6,9 +6,11 @@
 // run 'git submodule update -i'
 #include "compact_enc_det/compact_enc_det.h"
 
+#include "detect.h"
+
 using namespace std;
 using namespace Ambiesoft;
-wstring ConvertEncoding(const string& input)
+wstring ConvertEncoding(const vector<char>& input)
 {
 	int bytes_consumed = 0;
 	bool is_reliable = false;
@@ -52,7 +54,7 @@ wstring ConvertEncoding(const string& input)
 		CODEMAP(UTF8, 65001);
 	
 	case UTF16LE:
-		return wstring((wchar_t*)input.c_str());
+		return wstring((wchar_t*)input.data());
 	default:
 		assert(false);
 	}
@@ -60,5 +62,5 @@ wstring ConvertEncoding(const string& input)
 
 	if (codepage == 0)
 		codepage = 65001;
-	return toStdWstring(codepage, input.c_str(), input.size());
+	return toStdWstring(codepage, input.data(), input.size());
 }

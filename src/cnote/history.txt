@@ -1,3 +1,6 @@
+2021/06/12 v1.0.8
+Fixed: Read properly 2byte-or-more-char strings 
+
 2021/06/12 v1.0.7
 detect language
 
