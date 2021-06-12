@@ -16,6 +16,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="5 debug">
+      <UniqueIdentifier>{7da6c0c1-d7fb-4474-b37f-b69d06dc4667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cnote.cpp">
@@ -46,6 +49,21 @@
       <Filter>2 Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lsMisc\UTF16toUTF8.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\compact_enc_det\compact_enc_det\compact_enc_det.cc">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\compact_enc_det\util\encodings\encodings.cc">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\compact_enc_det\util\languages\languages.cc">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\compact_enc_det\compact_enc_det\compact_enc_det_hint_code.cc">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="detect.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,10 +98,31 @@
     <ClInclude Include="resource.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\compact_enc_det\compact_enc_det\compact_enc_det.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\compact_enc_det\util\encodings\encodings.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\compact_enc_det\util\languages\languages.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\compact_enc_det\compact_enc_det\compact_enc_det_hint_code.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="detect.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="history.txt">
       <Filter>4 dist</Filter>
+    </Text>
+    <Text Include="sjis.txt">
+      <Filter>5 debug</Filter>
+    </Text>
+    <Text Include="utf8.txt">
+      <Filter>5 debug</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

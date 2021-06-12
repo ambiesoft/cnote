@@ -9,12 +9,14 @@
 #include "../../../lsMisc/UTF16toUTF8.h"
 #include "../../../lsMisc/stdosd/stdosd.h"
 
+#include "detect.h"
+
 using namespace std;
 using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.6"
+#define CNOTE_VERSION L"1.0.7"
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -48,14 +50,7 @@ options:
 	wstring(L":") + GetLastErrorString(dwLE));		\
 } while(false)
 
-string toCRLF(const string& all)
-{
-	string ret = stdStringReplace(all, "\r\n", "\n");
-	ret = stdStringReplace(ret, "\r", "\n");
-	ret = stdStringReplace(ret, "\n", "\r\n");
 
-	return ret;
-}
 
 int wmain(int argc, const wchar_t* argv[])
 {
@@ -127,8 +122,11 @@ int wmain(int argc, const wchar_t* argv[])
 		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
 	}
 
+	// convert encoding
+	wstring converted = ConvertEncoding(all);
+
 	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
-		(LPARAM)(toStdWstringFromUtf8(bCRLF ? toCRLF(all) : all).c_str())))
+		(LPARAM)(bCRLF ? stdToCRLFString(converted) : converted).c_str()))
 	{
 		RETRUN_WITH_ERROR(L"Failed to set text on notepad");
 	}
