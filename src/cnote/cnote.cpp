@@ -19,7 +19,7 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.8"
+#define CNOTE_VERSION L"1.0.9"
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -54,11 +54,34 @@ options:
 } while(false)
 
 
+bool IsWindow11()
+{
+	HMODULE hDll = LoadLibrary(TEXT("Ntdll.dll"));
+	typedef NTSTATUS(CALLBACK* RTLGETVERSION) (PRTL_OSVERSIONINFOW lpVersionInformation);
+	RTLGETVERSION pRtlGetVersion;
+	pRtlGetVersion = (RTLGETVERSION)GetProcAddress(hDll, "RtlGetVersion");
+	if (pRtlGetVersion)
+	{
+		RTL_OSVERSIONINFOW ovi = { 0 };
+		ovi.dwOSVersionInfoSize = sizeof(ovi);
+		NTSTATUS ntStatus = pRtlGetVersion(&ovi);
+		if (ntStatus == 0)
+		{
+			//TCHAR wsBuffer[512];
+			//wsprintf(wsBuffer, TEXT("Major Version : %d - Minor Version : %d - Build Number : %d\r\n"), ovi.dwMajorVersion, ovi.dwMinorVersion, ovi.dwBuildNumber);
+			//OutputDebugString(wsBuffer);
+			return ovi.dwMajorVersion >= 10 && ovi.dwBuildNumber >= 22000;
+		}
+	}
+	return false;
+}
 
 int wmain(int argc, const wchar_t* argv[])
 {
 	bool bCRLF = false;
 	bool bVerbose = false;
+	const bool bIsWin11 = IsWindow11();
+
 	for (int i = 1; i < argc; ++i)
 	{
 		if(false){}
@@ -106,7 +129,7 @@ int wmain(int argc, const wchar_t* argv[])
 	// MessageBoxA(nullptr, all.c_str(), nullptr, MB_ICONINFORMATION);
 
     // how to handle window handle in linux?
-    CHandle process;
+    CKernelHandle process;
 	if (!OpenCommon(nullptr, L"notepad", nullptr, nullptr, &process))
 	{
 		RETRUN_WITH_ERROR(L"Failed to open notepad");
@@ -124,20 +147,37 @@ int wmain(int argc, const wchar_t* argv[])
 	}
 
 	HWND hEditNotepad = NULL;
-	for (auto hNotepad : allTops)
+	DWORD dwStartTick = GetTickCount();
+	do
 	{
-		HWND h = GetChildWindowByClassName(hNotepad, L"Edit");
-		if (h)
+		for (auto hNotepad : allTops)
 		{
-			hEditNotepad = h;
-			break;
+			HWND h = GetChildWindowByClassName(hNotepad, L"Edit");
+			if (!h)
+			{
+				// In case of Windows 11's notepad
+				h = GetChildWindowByClassName(hNotepad, L"RichEditD2DPT");
+			}
+			if (h)
+			{
+				hEditNotepad = h;
+				break;
+			}
 		}
-	}
-	if (!IsWindow(hEditNotepad))
-	{
-		RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
-	}
+		if (!IsWindow(hEditNotepad))
+		{
+			if (!bIsWin11)
+				RETRUN_WITH_ERROR(L"Failed to obtain edit control of notepad");
 
+			// In windows11, it fails to find RichEdit control,
+			// retry during 3000 milisec
+			Sleep(500);
+			if ((GetTickCount() - dwStartTick) > 3000)
+				RETRUN_WITH_ERROR(L"Failed to obtain richedit control of notepad in 3000ms");
+			continue;
+		}
+		break;
+	} while (true);
 	// convert encoding
 	string encoding;
 	wstring converted = ConvertEncoding(all, bVerbose ? &encoding : nullptr);

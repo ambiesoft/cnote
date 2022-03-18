@@ -19,36 +19,15 @@
     <Filter Include="5 debug">
       <UniqueIdentifier>{7da6c0c1-d7fb-4474-b37f-b69d06dc4667}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2 Source Files\lsMisc">
+      <UniqueIdentifier>{a50fc5c7-527a-4845-bf67-0638df8844ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cnote.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\FindTopWindowFromPID.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\GetChildWindowBy.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\I18N.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\OpenCommon.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\stdosd\stdosd.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\stdosd\stdosd_win.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\UTF16toUTF8.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\compact_enc_det\compact_enc_det\compact_enc_det.cc">
@@ -65,6 +44,30 @@
     </ClCompile>
     <ClCompile Include="detect.cpp">
       <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\FindTopWindowFromPID.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\GetChildWindowBy.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\I18N.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\OpenCommon.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\stdosd\stdosd.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\stdosd\stdosd_win.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\UTF16toUTF8.cpp">
+      <Filter>2 Source Files\lsMisc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

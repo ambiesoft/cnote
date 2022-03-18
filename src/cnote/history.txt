@@ -1,3 +1,6 @@
+2022/03/19 v1.0.9
+Fixed: In Windows 11, it failed to find the Rich Edit Control of notepad
+
 2021/06/12 v1.0.8
 Fixed: Read properly 2byte-or-more-char strings 
 
