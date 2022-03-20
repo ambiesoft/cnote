@@ -185,10 +185,21 @@ int wmain(int argc, const wchar_t* argv[])
 	{
 		cout << "Detected encoding = " << encoding << "\n";
 	}
+	
 	if (FALSE == SendMessage(hEditNotepad, WM_SETTEXT, 0,
 		(LPARAM)(bCRLF ? stdToCRLFString(converted) : converted).c_str()))
 	{
 		RETRUN_WITH_ERROR(L"Failed to set text on notepad");
+	}
+	if (bIsWin11)
+	{
+		// TODO: Set modify to false, following code does not work
+		
+		//UINT ttt = SendMessage(hEditNotepad, EM_GETMODIFY, 0, 0);
+		//SendMessage(hEditNotepad, EM_SETMODIFY, TRUE, FALSE);
+		//ttt = SendMessage(hEditNotepad, EM_GETMODIFY, 0, 0);
+		//SendMessage(hEditNotepad, EM_SETMODIFY, FALSE, FALSE);
+		//ttt = SendMessage(hEditNotepad, EM_GETMODIFY, 0, 0);
 	}
 	return 0;
 }
