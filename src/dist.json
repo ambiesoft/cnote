@@ -11,8 +11,8 @@
             }
     ],
     "archivedir": "C:/Linkout/",
-    "remotedir": "http://ambiesoft.mooo.com/ffdav/uploads/cnote/",
-    "remotesha1" : "http://ambiesoft.mooo.com/ffdav/uploads/getSha1.php?file=cnote/{}",
+    "remotedir": "https://ambiesoft.com/ffdav/uploads/cnote/",
+    "remotesha1" : "https://ambiesoft.com/ffdav/uploads/getSha1.php?file=cnote/{}",
     
     "TotalFileCount": "exact",
     
