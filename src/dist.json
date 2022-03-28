@@ -24,7 +24,12 @@
 		"history.txt",
 		"cnote.exe",
 		"cnote.pdb",
-		"README.md"
+		"README.md",
+		"txvr.exe",
+		"txvr.pdb",
+		"icuin69.dll",
+		"icuuc69.dll",
+		"icudt69.dll"
 	],
     
     "ShouldBeOneOfThem": [],
