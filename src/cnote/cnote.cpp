@@ -23,7 +23,8 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.10"
+#define CNOTE_VERSION L"1.0.11"
+#define CNOTE_DEFAULT_VIEWER "txvr"
 
 void ShowErrorAndExit(const wstring& message)
 {
@@ -76,6 +77,7 @@ int wmain(int argc, const wchar_t* argv[])
 	const bool bIsWin11 = IsWindows11OrAbove();
 
 	CCommandLineParser parser(I18N(L"Views standard outputs in a gui viewer"), CNOTE_APPNAME);
+	parser.setStrict();
 
 	parser.AddOption(L"-W",
 		ArgCount::ArgCount_Zero,
@@ -113,7 +115,14 @@ int wmain(int argc, const wchar_t* argv[])
 		ArgEncodingFlags_Default,
 		I18N(L"Viewer to use"));
 
-	parser.Parse();
+	try 
+	{
+		parser.Parse();
+	}
+	catch (CCommandLineParserException& ex)
+	{
+		ShowErrorAndExit(ex.wwhat());
+	}
 
 	if (parser.hadUnknownOption())
 	{
@@ -133,7 +142,7 @@ int wmain(int argc, const wchar_t* argv[])
 		string dv;
 		Profile::GetString(SECTION_OPTION, KEY_DEFAULT_VIEWER, "", dv, GetIniFile());
 		if (dv.empty())
-			dv = "notepad";
+			dv = CNOTE_DEFAULT_VIEWER;
 		cout << dv << endl;
 		return 0;
 	}
@@ -159,7 +168,7 @@ int wmain(int argc, const wchar_t* argv[])
 		string v;
 		Profile::GetString(SECTION_OPTION, KEY_DEFAULT_VIEWER, "", v, GetIniFile());
 		if (v.empty())
-			v = "notepad";
+			v = CNOTE_DEFAULT_VIEWER;
 		viewer = toStdWstringFromUtf8(v);
 	}
 	wstring viewerArg;
