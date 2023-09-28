@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include <cassert>
+
 #include "../../../lsMisc/OpenCommon.h"
 #include "../../../lsMisc/GetLastErrorString.h"
 #include "../../../lsMisc/I18N.h"
@@ -23,7 +23,7 @@ using namespace Ambiesoft;
 using namespace Ambiesoft::stdosd;
 
 #define CNOTE_APPNAME L"cnote"
-#define CNOTE_VERSION L"1.0.11"
+#define CNOTE_VERSION L"1.0.12"
 #define CNOTE_DEFAULT_VIEWER "txvr"
 
 void ShowErrorAndExit(const wstring& message)
@@ -56,7 +56,7 @@ wstring GetIniFile()
 {
 	return stdCombinePath(
 		stdGetParentDirectory(stdGetModuleFileName()),
-		stdGetFileNameWitoutExtension(stdGetModuleFileName()) + L".ini");
+		stdGetFileNameWithoutExtension(stdGetModuleFileName()) + L".ini");
 }
 #define RETRUN_WITH_ERROR(ERRROSTRING) do {			\
 	DWORD dwLE = GetLastError();					\
